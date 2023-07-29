@@ -2,11 +2,10 @@ import React from "react";
 import { UseMutateAsyncFunction, useMutation } from "react-query";
 import { useService } from "../APIs/Services";
 import { ILogin } from "../models";
-import { AxiosResponse } from "axios";
 
 interface IAuthContext {
   mutateLoginApplication: UseMutateAsyncFunction<
-    AxiosResponse<any, any>,
+    void,
     unknown,
     ILogin,
     unknown
@@ -23,6 +22,7 @@ export const AuthProvider: React.FC<any> = ({ children }: any) => {
     useMutation((RequestBody: ILogin) => authService.login(RequestBody),{
       onError:(err)=>alert("xeta bash verdi")
     });
+    
   return (
     <AuthContext.Provider value={{ mutateLoginApplication, isLoadingLogin }}>
       {children}

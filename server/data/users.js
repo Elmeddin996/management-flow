@@ -1,18 +1,35 @@
 const DUserData = {
-    email:"elmaddinshm@code.edu.az",
-    password:"123456"
+  email: "elm@code.edu.az",
+  password: "123456",
 };
 
-const DUserList = {
-firstName:"Elmeddin",
-lastName: "Mirzayev",
-email: "elm@code.az",
-phoneNumber: "+994 50 548 19 96",
-age:"27",
-roles: ["DIRECTOR"]
-}
+const DUserList = [
+  {
+    firstName: "Elmeddin",
+    lastName: "Mirzayev",
+    email: "elm@code.az",
+    phoneNumber: "+994 50 548 19 96",
+    age: "27",
+    roles: ["DIRECTOR"],
+  },
+  {
+    firstName: "Rza",
+    lastName: "Mirzayev",
+    email: "rza@code.az",
+    phoneNumber: "+994 55 555 55 55",
+    age: "3",
+    roles: ["FOUNDER"],
+  },
+];
 
-module.exports={
-    DUserData,
-    DUserList
-}
+const DLoginnedUser = {
+  firstName: "Elmeddin",
+  lastName: "Mirzayev",
+  email: "elm@code.edu.az",
+};
+
+module.exports = {
+  DUserData,
+  DUserList,
+  DLoginnedUser
+};

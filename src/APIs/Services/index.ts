@@ -4,7 +4,7 @@ import { UserService } from "./Users";
 export const useService =()=>{
     const services={
         authService: new  AuthService(),
-        userService:new UserService()
+        userService: new UserService()
     };
 
     return services;

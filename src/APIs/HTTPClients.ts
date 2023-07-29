@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export class HttpClient{
+export class HttpClient{  
     baseUrl:string;
     constructor(url:string){
         this.baseUrl=url;

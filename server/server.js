@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const { DUserData } = require("./data/users");
+const { DUserData, DUserList, DLoginnedUser } = require("./data/users");
 const PORT = process.env.PORT | 3001;
 
 const app = express();
@@ -15,14 +15,15 @@ app.post("/login", (req, res) => {
     req.body.email === DUserData.email &&
     req.body.password === DUserData.password
   ) {
-    return res.json({ token: "qwertyuiopasdfghjklzxcvnm" });
+    return res.json({ token: "qwertyuiopasdfghjklzxcvnm", user: DLoginnedUser });
   }
   res.sendStatus(400);
 });
 
 app.get("/users",(_,res)=>{
-    res.json(DUserData)
+  res.json(DUserList)
 })
+
 
 app.listen(PORT, () => {
   console.log(PORT);

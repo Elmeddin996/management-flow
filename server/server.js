@@ -20,6 +20,11 @@ app.post("/login", (req, res) => {
   res.sendStatus(400);
 });
 
+app.post("/logout",(_,res)=>{
+  res.sendStatus(200);
+})
+
+
 app.get("/users",(_,res)=>{
   res.json(DUserList)
 })

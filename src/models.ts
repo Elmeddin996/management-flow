@@ -15,6 +15,12 @@ export interface ILogin{
     password:string;
 }
 
+export interface UserLogoutData {
+    firstName: string,
+    lastName: string,
+    email: string
+  }
+
 export interface IUserInfo{
     firstName:string;
     lastName:string;

@@ -1,4 +1,4 @@
-import { EUserRoles } from "./enums"
+import { ECurrency, EPositions, EUserRoles } from "./enums"
 
 export interface IRegisterUser{
     firstName:string;
@@ -15,17 +15,18 @@ export interface ILogin{
     password:string;
 }
 
-export interface UserLogoutData {
+export interface IUserLogoutData {
     firstName: string,
     lastName: string,
     email: string
   }
 
-export interface IUserInfo{
+export interface IUserData{
+    id: string;
     firstName:string;
     lastName:string;
     age:number;
-    email:string;
-    password:string;
-    roles:EUserRoles[];
+    position:EPositions;
+    salary:number;
+    currency:ECurrency;
 }

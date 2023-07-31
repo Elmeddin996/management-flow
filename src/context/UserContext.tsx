@@ -1,35 +1,45 @@
 import React from "react";
 import { UseMutateAsyncFunction, useMutation, useQuery } from "react-query";
 import { useService } from "../APIs/Services";
-import { IUserInfo, UserLogoutData } from "../models";
-import { QueryKeys } from "../enums";
+import { IUserData, IUserLogoutData } from "../models";
+import { EQueryKeys } from "../enums";
 
 interface IUserContext {
   mutateLogOutUser: UseMutateAsyncFunction<
     void,
     unknown,
-    UserLogoutData,
+    IUserLogoutData,
     unknown
   >;
-  userList: IUserInfo[];
+  userList: IUserData[];
+  
 }
+
 
 export const UserContext = React.createContext<IUserContext>(null as any);
 
 export const UserProvider: React.FC<any> = ({ children }: any) => {
   const { userService, authService } = useService();
 
-  const { data: userList } = useQuery([QueryKeys.GETUSERLIST], () =>
+  const { data: userList } = useQuery([EQueryKeys.GETUSERLIST], () =>
     userService.getUserList()
   );
 
   const { mutateAsync: mutateLogOutUser } = useMutation(
-    (RequestBody: UserLogoutData) => authService.logout(RequestBody),
+    (RequestBody: IUserLogoutData) => authService.logout(RequestBody),
     {
       onError: (err) => alert("xeta bash verdi"),
     }
   );
 
+  // const { mutateAsync: mutateUpdateUser } = useMutation(
+  //   (UpdateUser: IUserData) => userService.updateUserData(UpdateUser),
+  //   {
+  //     onError: (err) => alert("xeta bash verdi"),
+  //   }
+  // );
+
+  
   return (
     <UserContext.Provider
       value={{ userList: userList?.data, mutateLogOutUser }}

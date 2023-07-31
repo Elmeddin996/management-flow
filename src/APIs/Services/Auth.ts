@@ -1,4 +1,4 @@
-import { ILogin, IRegisterUser, UserLogoutData } from "../../models";
+import { ILogin, IRegisterUser, IUserLogoutData } from "../../models";
 import { HttpClient } from "../HTTPClients";
 
 export class AuthService extends HttpClient {
@@ -17,7 +17,7 @@ export class AuthService extends HttpClient {
     });
   }
 
-  async logout(body: UserLogoutData) {
+  async logout(body: IUserLogoutData) {
     return await this.post(`logout`, body).then(()=>{
       localStorage.removeItem("token")
       localStorage.removeItem("user")

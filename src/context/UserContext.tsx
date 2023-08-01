@@ -32,12 +32,7 @@ export const UserProvider: React.FC<any> = ({ children }: any) => {
     }
   );
 
-  // const { mutateAsync: mutateUpdateUser } = useMutation(
-  //   (UpdateUser: IUserData) => userService.updateUserData(UpdateUser),
-  //   {
-  //     onError: (err) => alert("xeta bash verdi"),
-  //   }
-  // );
+ 
 
   
   return (

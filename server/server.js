@@ -31,7 +31,7 @@ app.get("/users", (_, res) => {
   res.json(DUserList);
 });
 
-app.put("users/:id", (req, res) => {
+app.put("users/id", (req, res) => {
   const userId = parseInt(req.params.id);
   const updatedUserData = req.body;
   let userIndex = DUserList.findIndex((user) => user.id === userId);

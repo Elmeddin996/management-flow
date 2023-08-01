@@ -3,5 +3,7 @@ export const ROUTES = {
       LOGIN:"/",
       REGISTER:"/register"
     },
-    USERS:"/users"
+    USERS:"/users",
+    USEREDIT:"/edit"
+
 }

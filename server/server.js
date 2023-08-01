@@ -31,16 +31,16 @@ app.get("/users", (_, res) => {
   res.json(DUserList);
 });
 
-app.put("users/id", (req, res) => {
+app.put("/users/:id", (req, res) => {
   const userId = parseInt(req.params.id);
   const updatedUserData = req.body;
-  let userIndex = DUserList.findIndex((user) => user.id === userId);
+  const userIndex = DUserList.findIndex((user) => user.id === userId);
 
   if (userIndex !== -1) {
     DUserList[userIndex] = { ...DUserList[userIndex], ...updatedUserData };
-    res.json(DUserData);
+    res.sendStatus(200)
   } else {
-    res.sendStatus(404);
+    res.sendStatus(404)
   }
 });
 

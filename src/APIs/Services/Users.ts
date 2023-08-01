@@ -10,7 +10,7 @@ export class UserService extends HttpClient {
     return await this.get(`users`);
   }
 
-  async updateUserData(body: IUserData, id: string) {
+  async updateUserData(id: any, body: IUserData) {
     return await this.put(`users`, id, body);
   }
 }

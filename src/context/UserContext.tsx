@@ -11,10 +11,9 @@ interface IUserContext {
     IUserLogoutData,
     unknown
   >;
-  userList: IUserData[];
+  userList:IUserData[];
   
 }
-
 
 export const UserContext = React.createContext<IUserContext>(null as any);
 
@@ -32,9 +31,6 @@ export const UserProvider: React.FC<any> = ({ children }: any) => {
     }
   );
 
- 
-
-  
   return (
     <UserContext.Provider
       value={{ userList: userList?.data, mutateLogOutUser }}

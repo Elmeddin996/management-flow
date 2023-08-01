@@ -6,6 +6,7 @@ import { UserProvider } from "../context/UserContext";
 import { Applications } from "../app/Applications";
 import { ErrorPage } from "../app/components/ErrorPage";
 import { ProtectedRouter } from "../app/components/ProtectedRouter";
+import { UserEdit } from "../app/components/UserEdit";
 
 export const AppRoutes: React.FC = () => {
   return (
@@ -26,6 +27,13 @@ export const AppRoutes: React.FC = () => {
       </ProtectedRouter>
       } />
         
+        <Route path={"/edit/:id"} element={
+          <ProtectedRouter>
+          <UserProvider>
+            <UserEdit/>
+          </UserProvider>
+        </ProtectedRouter>
+        }/>
       
 
       <Route path="*" element={<ErrorPage />} />

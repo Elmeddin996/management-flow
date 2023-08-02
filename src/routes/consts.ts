@@ -4,6 +4,7 @@ export const ROUTES = {
       REGISTER:"/register"
     },
     USERS:"/users",
-    USEREDIT:"/edit"
+    USEREDIT:"/edit",
+    USERADD:"/add"
 
 }

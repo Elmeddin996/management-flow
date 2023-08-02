@@ -7,6 +7,7 @@ import { Applications } from "../app/Applications";
 import { ErrorPage } from "../app/components/ErrorPage";
 import { ProtectedRouter } from "../app/components/ProtectedRouter";
 import { UserEdit } from "../app/components/UserEdit";
+import { UserCreate } from "../app/components/UserCreate";
 
 export const AppRoutes: React.FC = () => {
   return (
@@ -19,22 +20,40 @@ export const AppRoutes: React.FC = () => {
           </AuthProvider>
         }
       />
-      <Route path={ROUTES.USERS} element={
-        <ProtectedRouter>
-        <UserProvider>
-          <Applications />
-        </UserProvider>
-      </ProtectedRouter>
-      } />
-        
-        <Route path={"/edit/:id"} element={
+      <Route
+        path={ROUTES.USERS}
+        element={
           <ProtectedRouter>
-          <UserProvider>
-            <UserEdit/>
-          </UserProvider>
-        </ProtectedRouter>
-        }/>
-      
+            <UserProvider>
+              <Applications />
+            </UserProvider>
+          </ProtectedRouter>
+        }
+      />
+
+      <Route
+        path={"/edit/:id"}
+        element={
+          <ProtectedRouter>
+            <UserProvider>
+              <UserEdit />
+            </UserProvider>
+          </ProtectedRouter>
+        }
+      />
+
+
+<Route
+        path={"/add"}
+        element={
+          <ProtectedRouter>
+            <UserProvider>
+              <UserCreate />
+            </UserProvider>
+          </ProtectedRouter>
+        }
+      />
+
 
       <Route path="*" element={<ErrorPage />} />
     </Routes>

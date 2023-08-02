@@ -1,59 +1,52 @@
-import * as React from "react";
-import FormControl from "@mui/base/FormControl";
-import Input from "@mui/base/Input";
-import { useUserContext } from "../../hooks";
-import { useService } from "../../APIs/Services";
+import React from "react";
 import { useMutation } from "react-query";
+import { useService } from "../../APIs/Services";
 import { IUserData } from "../../models";
-import { Button, FormHelperText, InputLabel } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../routes/consts";
+import { Button, FormControl, FormHelperText, Input, InputLabel } from "@mui/material";
 
-export const UserEdit = () => {
-  const { id } = useParams();
-  const { userList } = useUserContext();
+export const UserCreate = () => {
   const { userService } = useService();
   const [newUserData, setNewUserData] = React.useState<IUserData>();
   const navigate = useNavigate();
 
-  React.useEffect(() => {
-    setNewUserData(userList?.find((item) => item.id === id));
-  }, [userList, id]);
-
-  const { mutateAsync: mutateUpdateUser } = useMutation(
-    (updatedUser: IUserData) => userService.updateUserData(id, updatedUser),
+  const { mutateAsync: mutateCreateUser } = useMutation(
+    (createUser: IUserData) => userService.createNewUser(createUser),
     {
       onError: (err) => alert("Xeta bash verdi"),
-      onSuccess: (data) => {
-        setNewUserData(data.config.data);
+      onSuccess: () => {
         navigate(ROUTES.USERS);
       },
     }
   );
+
+ 
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-
-    setNewUserData((prevFormData) => {
-      if (prevFormData) {
-        return {
-          ...prevFormData,
-          [name]: value,
-        };
-      }
-      return prevFormData;
-    });
-  };
+  setNewUserData((prevUserData):any=> {
+    if (!prevUserData) {
+      return { [name]: value };
+    }
+    return {
+      ...prevUserData,
+      [name]: value,
+    };
+    
+});
+};
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (newUserData) {
-      mutateUpdateUser(newUserData);
+        mutateCreateUser(newUserData);
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <FormControl value={newUserData ? newUserData.firstName : ""} required>
+      <FormControl  required>
         <InputLabel htmlFor="firstName">Name</InputLabel>
         <Input
           name="firstName"
@@ -62,7 +55,7 @@ export const UserEdit = () => {
         />
         <FormHelperText />
       </FormControl>
-      <FormControl value={newUserData ? newUserData.lastName : ""} required>
+      <FormControl  required>
         <InputLabel htmlFor="lastName">Last Name</InputLabel>
         <Input
           name="lastName"
@@ -71,7 +64,7 @@ export const UserEdit = () => {
         />
         <FormHelperText />
       </FormControl>
-      <FormControl value={newUserData ? newUserData.age : ""} required>
+      <FormControl  required>
         <InputLabel htmlFor="age">Age</InputLabel>
         <Input
           name="age"
@@ -80,6 +73,16 @@ export const UserEdit = () => {
         />
         <FormHelperText />
       </FormControl>
+      <FormControl  required>
+        <InputLabel htmlFor="salary">Salary</InputLabel>
+        <Input
+          name="salary"
+          placeholder="Write your age here"
+          onChange={handleInputChange}
+        />
+        <FormHelperText />
+      </FormControl>
+     
       <Button type="submit" variant="contained" color="primary">
         Submit
       </Button>

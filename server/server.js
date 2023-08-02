@@ -31,14 +31,22 @@ app.get("/users", (_, res) => {
   res.json(DUserList);
 });
 
+let currentId = 3;
+
+app.post('/users', (req, res) => {
+  const newUser = { ...req.body, id: currentId++ };
+  DUserList.push(newUser);
+  res.status(201).json(newUser);
+});
+
 app.put("/users/:id", (req, res) => {
-  const userId = parseInt(req.params.id);
   const updatedUserData = req.body;
-  const userIndex = DUserList.findIndex((user) => user.id === userId);
+  const userIndex = DUserList.findIndex((user) => user.id === req.params.id);
 
   if (userIndex !== -1) {
     DUserList[userIndex] = { ...DUserList[userIndex], ...updatedUserData };
     res.sendStatus(200)
+    res.send(DUserList[userIndex])
   } else {
     res.sendStatus(404)
   }

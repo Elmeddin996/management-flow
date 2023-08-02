@@ -25,7 +25,7 @@ export const UserProvider: React.FC<any> = ({ children }: any) => {
   );
 
   const { mutateAsync: mutateLogOutUser } = useMutation(
-    (RequestBody: IUserLogoutData) => authService.logout(RequestBody),
+    (requestBody: IUserLogoutData) => authService.logout(requestBody),
     {
       onError: (err) => alert("xeta bash verdi"),
     }

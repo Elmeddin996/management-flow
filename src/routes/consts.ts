@@ -5,6 +5,6 @@ export const ROUTES = {
     },
     USERS:"/users",
     USEREDIT:"/edit",
-    USERADD:"/add"
+    USERADD:"/adduser"
 
 }

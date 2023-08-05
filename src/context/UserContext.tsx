@@ -30,7 +30,6 @@ export const UserProvider: React.FC<any> = ({ children }: any) => {
       onError: (err) => alert("xeta bash verdi"),
     }
   );
-
   return (
     <UserContext.Provider
       value={{ userList: userList?.data, mutateLogOutUser }}

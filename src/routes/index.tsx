@@ -44,7 +44,7 @@ export const AppRoutes: React.FC = () => {
 
 
 <Route
-        path={"/add"}
+        path={"/adduser"}
         element={
           <ProtectedRouter>
             <UserProvider>

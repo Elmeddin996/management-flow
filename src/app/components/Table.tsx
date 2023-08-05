@@ -10,12 +10,44 @@ import { Button } from "@mui/material";
 import { IUserData } from "../../models";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../routes/consts";
+import { useMutation } from "react-query";
+import { useService } from "../../APIs/Services";
+import Swal from "sweetalert2";
+
 
 interface ITable {
   tableBody: IUserData[];
 }
 
 export const GlobalTable: React.FC<ITable> = ({ tableBody }) => {
+  const { userService } = useService();
+
+  const {mutateAsync:mutateDeleteUser} = useMutation(
+   (id)=> userService.deleteUser(id)
+  )
+
+  const handleDeleteUser =(id:any)=>{
+    mutateDeleteUser(id);
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+      }
+    })
+  }
+
   return (
     <TableContainer component={Paper}>
       <Link to={ROUTES.USERADD}>
@@ -34,7 +66,7 @@ export const GlobalTable: React.FC<ITable> = ({ tableBody }) => {
         <TableBody>
           {tableBody?.map((tableBody) => (
             <TabletableBody
-              key={tableBody.id}
+              key={tableBody._id}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
@@ -47,10 +79,12 @@ export const GlobalTable: React.FC<ITable> = ({ tableBody }) => {
                 {tableBody.salary} {tableBody.currency}
               </TableCell>
               <TableCell align="right">
-                <Link to={`${ROUTES.USEREDIT}/${tableBody.id}`}>
+                <Link to={`${ROUTES.USEREDIT}/${tableBody._id}`}>
                   <Button>Edit</Button>
                 </Link>
-                <Button>Delete</Button>
+                <Button onClick={()=>{
+                  handleDeleteUser(tableBody._id)}
+                }>Delete</Button>
               </TableCell>
             </TabletableBody>
           ))}

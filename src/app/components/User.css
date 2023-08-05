@@ -1,0 +1,16 @@
+
+.form-box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    margin: 20px auto;
+    width: 50%;
+    height: 50vh;
+    background-color:aqua ;
+    border: 2px solid gray;
+}
+ 
+.select-box{
+    width: 30%;
+}

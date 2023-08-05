@@ -1,10 +1,23 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const { DUserData, DUserList, DLoginnedUser } = require("./data/users");
+const { DUserData,DLoginnedUser } = require("./data/users");
+const userData = require("./data/user");
+
 const PORT = process.env.PORT | 3001;
 
+const mongoose = require("mongoose");
+
+const dbURL =
+  "mongodb+srv://elmaddinshm:code123@cluster0.p8sczyl.mongodb.net/?retryWrites=true&w=majority";
+
+mongoose.connect(dbURL).then(()=>{
+  app.listen(PORT, () => {
+  console.log(PORT);
+})
+})
 const app = express();
+
 
 app.use(bodyParser.json());
 
@@ -28,30 +41,49 @@ app.post("/logout", (_, res) => {
 });
 
 app.get("/users", (_, res) => {
-  res.json(DUserList);
+  userData.userList.find().then((result)=>{
+    res.json(result);
+  })
 });
 
-let currentId = 3;
+app.delete("/users/:id", (req, res) => {
+ userData.userList.findByIdAndRemove(req.params.id)
+ .then((deletedUser)=>{
+  if (!deletedUser) {
+    res.send('user id is not correct')
+  }
+  return;
+ })
+ .catch((err)=>{
+  console.log(err);
+ })
 
-app.post('/users', (req, res) => {
-  const newUser = { ...req.body, id: currentId++ };
-  DUserList.push(newUser);
-  res.status(201).json(newUser);
+})
+
+app.post("/adduser", (req, res) => {
+  const user = new userData.userList(req.body);
+  user
+    .save()
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 app.put("/users/:id", (req, res) => {
-  const updatedUserData = req.body;
-  const userIndex = DUserList.findIndex((user) => user.id === req.params.id);
-
-  if (userIndex !== -1) {
-    DUserList[userIndex] = { ...DUserList[userIndex], ...updatedUserData };
-    res.sendStatus(200)
-    res.send(DUserList[userIndex])
-  } else {
-    res.sendStatus(404)
-  }
+ userData.userList.findByIdAndUpdate(req.params.id, req.body, { new: true })
+ .then((updatedUser) => {
+   if (!updatedUser) {
+     return res.status(404);
+   }
+   res.send(updatedUser);
+ })
+ .catch((err) => {
+   console.log(err);
+   res.status(500);
+ });
 });
 
-app.listen(PORT, () => {
-  console.log(PORT);
-});
+

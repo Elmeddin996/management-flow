@@ -16,10 +16,13 @@ export const UserEdit = () => {
   const [newUserData, setNewUserData] = React.useState<IUserData>();
   const navigate = useNavigate();
 
+  console.log(userList?.find((item) => item._id === id));
+  
   React.useEffect(() => {
-    setNewUserData(userList?.find((item) => item.id === id));
+    setNewUserData(userList?.find((item) => item._id === id));
   }, [userList, id]);
-
+  
+  console.log(newUserData);
   const { mutateAsync: mutateUpdateUser } = useMutation(
     (updatedUser: IUserData) => userService.updateUserData(id, updatedUser),
     {
@@ -52,7 +55,7 @@ export const UserEdit = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="form-box" onSubmit={handleSubmit}>
       <FormControl value={newUserData ? newUserData.firstName : ""} required>
         <InputLabel htmlFor="firstName">Name</InputLabel>
         <Input

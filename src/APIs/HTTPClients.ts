@@ -17,5 +17,9 @@ export class HttpClient{
     async put(endpoint:string,id:string, body:any){
         return await axios.put(`${this.baseUrl}/${endpoint}/${id}`,body);
     }
+
+    async delete(endpoint:string,id:string){
+        return await axios.delete(`${this.baseUrl}/${endpoint}/${id}`)
+    }
 }
 

@@ -1,36 +1,58 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const { DUserData,DLoginnedUser } = require("./data/users");
 const userData = require("./data/user");
-
+const jwt = require("jsonwebtoken")
 const PORT = process.env.PORT | 3001;
+const bcrypt = require("bcrypt")
 
 const mongoose = require("mongoose");
 
 const dbURL =
   "mongodb+srv://elmaddinshm:code123@cluster0.p8sczyl.mongodb.net/?retryWrites=true&w=majority";
 
-mongoose.connect(dbURL).then(()=>{
+mongoose.connect(dbURL).then(() => {
   app.listen(PORT, () => {
-  console.log(PORT);
-})
-})
+    console.log(PORT);
+  });
+});
 const app = express();
-
+const maxAge = 60*60*24;
+const createToken =(id)=>{
+ return jwt.sign({id}, 'secretkey',{expiresIn:maxAge})
+}
 
 app.use(bodyParser.json());
 
 app.use(cors());
 
-app.post("/login", (req, res) => {
+app.post("/signup", (req, res) => {
+  const admin = new userData.adminSchema(req.body);
+  admin
+    .save()
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+
+
+app.post("/login", async (req, res) => {
+
+  const { email, password} = req.body;
+    
+    const user = await userData.adminSchema.findOne({ email });
+  const auth = await bcrypt.compare(password, user.password)
+
   if (
-    req.body.email === DUserData.email &&
-    req.body.password === DUserData.password
+    req.body.email === user.email &&
+    auth
   ) {
+    const token = createToken(user._id)
     return res.json({
-      token: "qwertyuiopasdfghjklzxcvnm",
-      user: DLoginnedUser,
+      token: token,
     });
   }
   res.sendStatus(400);
@@ -41,24 +63,24 @@ app.post("/logout", (_, res) => {
 });
 
 app.get("/users", (_, res) => {
-  userData.userList.find().then((result)=>{
+  userData.userList.find().then((result) => {
     res.json(result);
-  })
+  });
 });
 
 app.delete("/users/:id", (req, res) => {
- userData.userList.findByIdAndRemove(req.params.id)
- .then((deletedUser)=>{
-  if (!deletedUser) {
-    res.send('user id is not correct')
-  }
-  return;
- })
- .catch((err)=>{
-  console.log(err);
- })
-
-})
+  userData.userList
+    .findByIdAndRemove(req.params.id)
+    .then((deletedUser) => {
+      if (!deletedUser) {
+        res.send("user id is not correct");
+      }
+      return;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 
 app.post("/adduser", (req, res) => {
   const user = new userData.userList(req.body);
@@ -73,17 +95,16 @@ app.post("/adduser", (req, res) => {
 });
 
 app.put("/users/:id", (req, res) => {
- userData.userList.findByIdAndUpdate(req.params.id, req.body, { new: true })
- .then((updatedUser) => {
-   if (!updatedUser) {
-     return res.status(404);
-   }
-   res.send(updatedUser);
- })
- .catch((err) => {
-   console.log(err);
-   res.status(500);
- });
+  userData.userList
+    .findByIdAndUpdate(req.params.id, req.body, { new: true })
+    .then((updatedUser) => {
+      if (!updatedUser) {
+        return res.status(404);
+      }
+      res.send(updatedUser);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500);
+    });
 });
-
-

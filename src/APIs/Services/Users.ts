@@ -1,4 +1,4 @@
-import { IUserData } from "../../models";
+import {IUserData } from "../../models";
 import { HttpClient } from "../HTTPClients";
 
 export class UserService extends HttpClient {
@@ -21,4 +21,6 @@ export class UserService extends HttpClient {
   async deleteUser(id:any){
     return await this.delete(`users`,id)
   }
+
+  
 }

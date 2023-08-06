@@ -8,6 +8,7 @@ import { ErrorPage } from "../app/components/ErrorPage";
 import { ProtectedRouter } from "../app/components/ProtectedRouter";
 import { UserEdit } from "../app/components/UserEdit";
 import { UserCreate } from "../app/components/UserCreate";
+import { AdminRegister } from "../app/Auth/Register";
 
 export const AppRoutes: React.FC = () => {
   return (
@@ -42,8 +43,7 @@ export const AppRoutes: React.FC = () => {
         }
       />
 
-
-<Route
+      <Route
         path={"/adduser"}
         element={
           <ProtectedRouter>
@@ -54,6 +54,14 @@ export const AppRoutes: React.FC = () => {
         }
       />
 
+      <Route
+        path={"/signup"}
+        element={
+          <AuthProvider>
+            <AdminRegister />
+          </AuthProvider>
+        }
+      />
 
       <Route path="*" element={<ErrorPage />} />
     </Routes>

@@ -23,6 +23,10 @@ export const Login = () => {
     []
   );
 
+  const handleRegisterSubmit=()=>{
+    navigate(ROUTES.AUTH.REGISTER);
+  }
+
   const handleLoginSubmit = React.useCallback(() => {
     mutateLoginApplication(loginInput)
       .then(() => {
@@ -53,6 +57,7 @@ export const Login = () => {
         />
       
         <Button variant="contained" onClick={handleLoginSubmit}>Log In</Button>
+        <Button variant="outlined" onClick={handleRegisterSubmit}>Register</Button>
     </Box>
   );
 };

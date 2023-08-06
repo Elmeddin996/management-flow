@@ -1,7 +1,8 @@
-const DUserData = {
-  email: "elm@code.edu.az",
-  password: "123456",
-};
+// const DUserData = {
+//   _id:1,
+//   email: "elm@code.edu.az",
+//   password: "123456",
+// };
 
 // const DUserList = [
 //   {
@@ -30,13 +31,13 @@ const DUserData = {
 //   },
 // ];
 
-const DLoginnedUser = {
-  firstName: "Elmeddin",
-  lastName: "Mirzayev",
-  email: "elm@code.edu.az",
-};
+// const DLoginnedUser = {
+//   firstName: "Elmeddin",
+//   lastName: "Mirzayev",
+//   email: "elm@code.edu.az",
+// };
 
-module.exports = {
-  DUserData,
-  DLoginnedUser
-};
+// module.exports = {
+//   DUserData,
+//   DLoginnedUser
+// };

@@ -1,7 +1,7 @@
 export const ROUTES = {
     AUTH:{
       LOGIN:"/",
-      REGISTER:"/register"
+      REGISTER:"/signup"
     },
     USERS:"/users",
     USEREDIT:"/edit",

@@ -1,14 +1,5 @@
-import { ECurrency, EPositions, EUserRoles } from "./enums"
+import { ECurrency, EPositions} from "./enums"
 
-export interface IRegisterUser{
-    firstName:string;
-    lastName:string;
-    age:number;
-    email:string;
-    phoneNumber:string;
-    password:string;
-    roles:EUserRoles[];
-}
 
 export interface ILogin{
     email:string;

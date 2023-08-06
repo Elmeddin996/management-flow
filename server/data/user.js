@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt")
+
 const Schema = mongoose.Schema;
 
 const DBUserListShcema = new Schema({
@@ -28,6 +30,25 @@ const DBloginedUserSchema = new Schema({
   },
 });
 
+const DBAdminSchema = new Schema({
+  email: {
+    type: String,
+    require: true,
+    unique: true
+  },
+  password:{
+    type: String,
+    require: true,
+  }
+})
+
+DBAdminSchema.pre('save', async function(next){
+  const salt = await bcrypt.genSalt()
+  this.password = await bcrypt.hash(this.password, salt)
+  next()
+})
+
 const loginedUser = mongoose.model("LoginedUser", DBloginedUserSchema);
 const userList = mongoose.model("UserList", DBUserListShcema)
-module.exports = {loginedUser, userList};
+const adminSchema = mongoose.model("AdminSchema", DBAdminSchema)
+module.exports = {loginedUser, userList, adminSchema};

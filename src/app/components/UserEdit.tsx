@@ -11,12 +11,12 @@ import { ROUTES } from "../../routes/consts";
 
 export const UserEdit = () => {
   const { id } = useParams();
-  const { userList } = useUserContext();
+
+  const { userList, refetchUsers } = useUserContext();
   const { userService } = useService();
   const [newUserData, setNewUserData] = React.useState<IUserData>();
   const navigate = useNavigate();
 
-  console.log(userList?.find((item) => item._id === id));
   
   React.useEffect(() => {
     setNewUserData(userList?.find((item) => item._id === id));
@@ -30,6 +30,7 @@ export const UserEdit = () => {
       onSuccess: (data) => {
         setNewUserData(data.config.data);
         navigate(ROUTES.USERS);
+        refetchUsers();
       },
     }
   );

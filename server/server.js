@@ -55,7 +55,7 @@ app.post("/login", async (req, res) => {
       token: token,
     });
   }
-  res.sendStatus(400);
+    res.sendStatus(400);
 });
 
 app.post("/logout", (_, res) => {

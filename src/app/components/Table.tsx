@@ -13,6 +13,7 @@ import { ROUTES } from "../../routes/consts";
 import { useMutation } from "react-query";
 import { useService } from "../../APIs/Services";
 import Swal from "sweetalert2";
+import { useUserContext } from "../../hooks";
 
 
 interface ITable {
@@ -21,13 +22,14 @@ interface ITable {
 
 export const GlobalTable: React.FC<ITable> = ({ tableBody }) => {
   const { userService } = useService();
+  const {refetchUsers}=useUserContext();
+
 
   const {mutateAsync:mutateDeleteUser} = useMutation(
    (id)=> userService.deleteUser(id)
   )
 
   const handleDeleteUser =(id:any)=>{
-    mutateDeleteUser(id);
 
     Swal.fire({
       title: 'Are you sure?',
@@ -39,6 +41,8 @@ export const GlobalTable: React.FC<ITable> = ({ tableBody }) => {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
+    mutateDeleteUser(id);
+    refetchUsers()
         Swal.fire(
           'Deleted!',
           'Your file has been deleted.',

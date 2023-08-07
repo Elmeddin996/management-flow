@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { GlobalTable } from "../components/Table";
 
 export const Applications: React.FC = () => {
-  const { userList, mutateLogOutUser } = useUserContext();
+  const { userList, mutateLogOutUser} = useUserContext();
   const [user, setUser] = React.useState<IUserLogoutData>({
     firstName: "",
     lastName: "",

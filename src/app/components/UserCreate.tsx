@@ -15,8 +15,10 @@ import {
   Select,
 } from "@mui/material";
 import { EPositions } from "../../enums";
+import { useUserContext } from "../../hooks";
 
 export const UserCreate = () => {
+  const {refetchUsers}=useUserContext();
   const { userService } = useService();
   const [newUserData, setNewUserData] = React.useState<IUserData>();
   const navigate = useNavigate();
@@ -26,6 +28,7 @@ export const UserCreate = () => {
     {
       onError: (err) => alert("Xeta bash verdi"),
       onSuccess: () => {
+        refetchUsers();
         navigate(ROUTES.USERS);
       },
     }

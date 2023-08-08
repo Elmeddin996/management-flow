@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
+
 
 const Schema = mongoose.Schema;
 
@@ -48,7 +50,16 @@ DBAdminSchema.pre('save', async function(next){
   next()
 })
 
+
+const maxAge = 60*60*24;
+
+DBAdminSchema.methods.createToken =()=>{
+ return jwt.sign({_id:this._id}, 'secretkey',{expiresIn:maxAge})
+}
+
 const loginedUser = mongoose.model("LoginedUser", DBloginedUserSchema);
 const userList = mongoose.model("UserList", DBUserListShcema)
 const adminSchema = mongoose.model("AdminSchema", DBAdminSchema)
+
+
 module.exports = {loginedUser, userList, adminSchema};

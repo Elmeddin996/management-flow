@@ -2,7 +2,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const userData = require("./data/user");
-const jwt = require("jsonwebtoken")
 const PORT = process.env.PORT | 3001;
 const bcrypt = require("bcrypt")
 
@@ -17,10 +16,7 @@ mongoose.connect(dbURL).then(() => {
   });
 });
 const app = express();
-const maxAge = 60*60*24;
-const createToken =(id)=>{
- return jwt.sign({id}, 'secretkey',{expiresIn:maxAge})
-}
+
 
 app.use(bodyParser.json());
 
@@ -50,9 +46,10 @@ app.post("/login", async (req, res) => {
     req.body.email === user.email &&
     auth
   ) {
-    const token = createToken(user._id)
+    const token = user.createToken()
     return res.json({
       token: token,
+      userId: user._id
     });
   }
     res.sendStatus(400);
@@ -62,7 +59,7 @@ app.post("/logout", (_, res) => {
   res.sendStatus(200);
 });
 
-app.get("/users", (_, res) => {
+app.get("/users",  (_, res) => {
   userData.userList.find().then((result) => {
     res.json(result);
   });
@@ -108,3 +105,4 @@ app.put("/users/:id", (req, res) => {
       res.status(500);
     });
 });
+

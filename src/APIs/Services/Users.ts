@@ -17,6 +17,7 @@ export class UserService extends HttpClient {
   async createNewUser(body: IUserData){
     return await this.post(`adduser`, body)
   }
+
   
   async deleteUser(id:any){
     return await this.delete(`users`,id)

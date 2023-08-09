@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken")
 
-function auth(req, res , next){
+module.exports = function (req, res , next){
     const token = req.header('auth-token');
     if (!token) {
         return res.status(401)
@@ -9,6 +9,7 @@ function auth(req, res , next){
     try {
         const decodedToken = jwt.verify(token,"secretkey")
         req.user = decodedToken; 
+        next();
     } catch (ex) {
         res.status(400)
     }

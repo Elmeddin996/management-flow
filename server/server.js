@@ -4,7 +4,7 @@ const cors = require("cors");
 const userData = require("./data/user");
 const PORT = process.env.PORT | 3001;
 const bcrypt = require("bcrypt")
-
+const multerConfig = require("./config/multerConfig")
 const mongoose = require("mongoose");
 
 const dbURL =
@@ -79,8 +79,9 @@ app.delete("/users/:id", (req, res) => {
     });
 });
 
-app.post("/adduser", (req, res) => {
+app.post("/adduser", multerConfig.single("image"), (req, res) => {
   const user = new userData.userList(req.body);
+
   user
     .save()
     .then((result) => {

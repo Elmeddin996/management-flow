@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt")
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
 
 
 const Schema = mongoose.Schema;
@@ -14,7 +14,8 @@ const DBUserListShcema = new Schema({
   roles: String,
   position: String,
   salary: Number,
-  currency: String
+  currency: String,
+  image:String
 });
 
 const DBloginedUserSchema = new Schema({

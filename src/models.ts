@@ -16,8 +16,9 @@ export interface IUserData{
     _id: string;
     firstName:string;
     lastName:string;
-    age:number;
+    age:string;
     position:EPositions;
-    salary:number;
+    salary:string;
     currency:ECurrency;
+    image:string
 }

@@ -15,42 +15,35 @@ import { useService } from "../../APIs/Services";
 import Swal from "sweetalert2";
 import { useUserContext } from "../../hooks";
 
-
 interface ITable {
   tableBody: IUserData[];
 }
 
 export const GlobalTable: React.FC<ITable> = ({ tableBody }) => {
   const { userService } = useService();
-  const {refetchUsers}=useUserContext();
+  const { refetchUsers } = useUserContext();
 
+  const { mutateAsync: mutateDeleteUser } = useMutation((id) =>
+    userService.deleteUser(id)
+  );
 
-  const {mutateAsync:mutateDeleteUser} = useMutation(
-   (id)=> userService.deleteUser(id)
-  )
-
-  const handleDeleteUser =(id:any)=>{
-
+  const handleDeleteUser = (id: any) => {
     Swal.fire({
-      title: 'Are you sure?',
+      title: "Are you sure?",
       text: "You won't be able to revert this!",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-    mutateDeleteUser(id);
-    refetchUsers()
-        Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
-          'success'
-        )
+        mutateDeleteUser(id);
+        refetchUsers();
+        Swal.fire("Deleted!", "Your file has been deleted.", "success");
       }
-    })
-  }
+    });
+  };
 
   return (
     <TableContainer component={Paper}>
@@ -65,6 +58,8 @@ export const GlobalTable: React.FC<ITable> = ({ tableBody }) => {
             <TableCell align="right">Yash</TableCell>
             <TableCell align="right">Vezife</TableCell>
             <TableCell align="right">Maash</TableCell>
+            <TableCell align="right">Image</TableCell>
+            <TableCell align="right">Actions</TableCell>
           </TabletableBody>
         </TableHead>
         <TableBody>
@@ -83,12 +78,20 @@ export const GlobalTable: React.FC<ITable> = ({ tableBody }) => {
                 {tableBody.salary} {tableBody.currency}
               </TableCell>
               <TableCell align="right">
+                <img src={tableBody.image} alt="img" />
+              </TableCell>
+
+              <TableCell align="right">
                 <Link to={`${ROUTES.USEREDIT}/${tableBody._id}`}>
                   <Button>Edit</Button>
                 </Link>
-                <Button onClick={()=>{
-                  handleDeleteUser(tableBody._id)}
-                }>Delete</Button>
+                <Button
+                  onClick={() => {
+                    handleDeleteUser(tableBody._id);
+                  }}
+                >
+                  Delete
+                </Button>
               </TableCell>
             </TabletableBody>
           ))}

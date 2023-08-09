@@ -24,7 +24,7 @@ export const UserEdit = () => {
   
   console.log(newUserData);
   const { mutateAsync: mutateUpdateUser } = useMutation(
-    (updatedUser: IUserData) => userService.updateUserData(id, updatedUser),
+    (updatedUser: any) => userService.updateUserData(id, updatedUser),
     {
       onError: (err) => alert("Xeta bash verdi"),
       onSuccess: (data) => {
@@ -51,7 +51,13 @@ export const UserEdit = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (newUserData) {
-      mutateUpdateUser(newUserData);
+      const { firstName, lastName, image} = newUserData;
+      const data= new FormData();
+      data.append('firstName', firstName);
+      data.append('lastName', lastName);
+      data.append('image', image);
+  
+      mutateUpdateUser(data);
     }
   };
 

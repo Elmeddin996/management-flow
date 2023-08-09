@@ -35,10 +35,11 @@ export const UserCreate = () => {
   );
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+    const { name, value, files } = e.target;
     setNewUserData((prevUserData): any => {
       if (!prevUserData) {
-        return { [name]: value };
+       
+        return { [name]: name==="image"? {[name]: files} :  value };
       }
       return {
         ...prevUserData,
@@ -84,10 +85,10 @@ export const UserCreate = () => {
           <FormHelperText />
         </FormControl>
         <FormControl required>
-          <InputLabel htmlFor="salary">Salary</InputLabel>
+          <InputLabel htmlFor="image"></InputLabel>
           <Input
-            name="salary"
-            placeholder="Write your age here"
+            name="image"
+            type="file"
             onChange={handleInputChange}
           />
           <FormHelperText />
